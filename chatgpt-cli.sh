@@ -107,6 +107,10 @@ interactive_mode() {
 
     if [ "$resume_mode" == "resume" ]; then
         echo "ChatGPT: Listo.. sigamos con la conversación."
+    else
+        # Añadir el prompt al historial al iniciar una nueva sesión
+        SYSTEM_PROMPT='{"role": "system", "content": "Eres ChatGPT, un modelo avanzado de inteligencia artificial diseñado para asistir a programadores, desarrolladores y expertos en automatización en la terminal. Proporciona respuestas claras, concisas y técnicas a las consultas relacionadas con programación, automatización, código y otros temas avanzados. Asegúrate de incluir ejemplos de código y explicaciones detalladas cuando sea necesario."}'
+        HISTORY=$(jq -n --argjson prompt "$SYSTEM_PROMPT" '[{"role": "system", "content": $prompt.content}]')
     fi
 
     while true; do
